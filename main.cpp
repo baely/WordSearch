@@ -28,13 +28,17 @@ public:
 
 void
 searchRectangle(std::vector<std::string> wordMatrix, WordNode dictionary, int i, int j, std::string currString = "") {
+    // Get the current cell character and capitalise it if needed.
     char c = wordMatrix[i][j];
     c = c >= 'a' ? c - 'a' + 'A' : c;
 
+    // Load the dictionary for character c.
     WordNode nextDictionary = dictionary.nextLetter[c];
 
+    // If flagged as a word, let us know
     if (nextDictionary.isWord) std::cout << "Found: " << currString.c_str() << c << std::endl;
 
+    // If there are deeper words, run the algo on each neighbour, keeping track of the characters
     if (nextDictionary.isMore) {
         for (std::pair<int, int> pair : neighbours) {
             if ((i + pair.first < 0) || (i + pair.first >= wordMatrix.size()) || (j + pair.second < 0) ||
@@ -47,7 +51,7 @@ searchRectangle(std::vector<std::string> wordMatrix, WordNode dictionary, int i,
 }
 
 int main() {
-
+    // Load files
     std::string s;
 
     std::vector<std::string> words, rectangleRaw;
@@ -58,18 +62,18 @@ int main() {
     std::ifstream wordGrid("..\\grid.txt");
     while (std::getline(wordGrid, s)) rectangleRaw.push_back(s);
 
+    /**
+     * Algo start here
+     */
+
     WordNode dictionary = WordNode();
 
+    // Load the wordlist into new dictionary
     for (const std::string& word : words) dictionary.insertWord(word);
 
-    dictionary.insertWord("Kotlin");
-    dictionary.insertWord("fun");
-    dictionary.insertWord("file");
-    dictionary.insertWord("line");
-    dictionary.insertWord("null");
-
+    // Run the algorithm starting on each cell in the search grid
     for (int i = 0; i < rectangleRaw.size(); ++i) {
-        for (int j = 0; j < rectangleRaw[0].length(); ++j) {
+        for (int j = 0; j < rectangleRaw[i].length(); ++j) {
             searchRectangle(rectangleRaw, dictionary, i, j);
         }
     }
