@@ -4,10 +4,7 @@
 #include <map>
 #include <string>
 
-const std::vector<std::pair<int, int>> neighbours = {{0,  -1},
-                                                     {1,  0},
-                                                     {0,  1},
-                                                     {-1, 0}};
+const std::vector<std::pair<int, int>> neighbours = {{0,-1},{1,0},{0,1},{-1,0}};
 
 class WordNode {
 public:
