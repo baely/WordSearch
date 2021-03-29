@@ -24,25 +24,6 @@ public:
             isWord = true;
         }
     }
-
-    void printWords(int indent = 0) {
-        for (auto &x : nextLetter) {
-            for (int i = 0; i < indent; i++) std::cout << " ";
-
-            std::cout << x.first << " : " << x.second.isWord << std::endl;
-
-            x.second.printWords(indent + 1);
-        }
-    }
-
-    bool search(std::string text) {
-        if (text[0] == '\0')
-            return isWord;
-
-        char c = text[0] >= 'a' ? text[0] - 'a' + 'A' : text[0];
-
-        return nextLetter[c].search(text.substr(1));
-    }
 };
 
 void
